@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="js/jquery-3.2.1.min.js"></script>
+    </head>
+    <body>
+        
+        <table>
+            <tr>
+                <td>Adult Price I & II</td>
+                <td><input type="number" name="" class="person" min="0" max="15" value="0"> Person</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Adult Price III & IV</td>
+                <td><input type="number" name="" class="person" min="0" max="15" value="0"> Person</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Adult Familia</td>
+                <td><input type="number" name="" class="person" min="0" max="15" value="0"> Person</td>
+                <td></td>
+            </tr>
+            <tr class="gbs">
+                <td>Port charges</td>
+                <td gip="57000">Rp 57.000 x <span class="over_person">0</span></td>
+                <td sub_over>-</td>
+            </tr>
+            <tr class="gbs">
+                <td>Departure Tax</td>
+                <td gip="75000">Rp 75.000 x <span class="over_person">0</span></td>
+                <td sub_over>-</td>
+            </tr>
+            <tr class="gbs">
+                <td>Gratuities Tipping</td>
+                <td gip="43000">Rp 43.000 x <span class="over_person">0</span></td>
+                <td sub_over>-</td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td final_total>-</td>
+            </tr>
+        </table>
+
+
+        <script>
+
+            $('.person').change(function(){
+                var total=0;
+                $('.person').each(function(){
+                    var v=$(this).val();
+                    var u=(v[0])?parseInt($(this).val()):0;
+                    if(v[0])
+                    {
+                        u=parseInt(v)
+                    }
+                    else{
+                        u=0;
+                        $(this).val('0');
+                    }
+                    total+=u;
+                })
+                overCalculate(total)
+            })
+
+            function overCalculate(person)
+            {
+                var total=0;
+                (person==0)?$('.gbs').hide():$('.gbs').show();
+                $('.gbs').each(function(k,v){
+                    var g=$(v).find('[gip]'),y=$(v).find('[sub_over]'),j=g.attr('gip'),t=j*person,ts;
+                    $(v).find('.over_person').text(person);
+                    y.text('Rp '+t);
+                    total+=parseInt(t);
+                })
+                ts=(total==0)?'-':total;
+                $('[final_total]').text('Rp '+ts);
+
+                return total;
+            }
+            var s=overCalculate(0);
+            //console.log(s);
+        </script>
+    </body>
+</html>
